@@ -4,8 +4,14 @@ import { Badge } from "@/components/ui/badge";
 import { type ColumnDef } from "@tanstack/react-table";
 import { labels, priorities, statuses } from "../_constants/metadata";
 import { type Task } from "../_constants/schema";
+import { Checkbox } from "@/components/ui/checkbox";
 
 export const columns: Array<ColumnDef<Task>> = [
+    {
+        accessorKey: "checkbox",
+        header: ({ column }) => <span>select</span>,
+        cell: ({ row }) => <div className="w-[80px]">{<Checkbox checked={row.getIsSelected()} />}</div>,
+    },
     {
         accessorKey: "id",
         header: ({ column }) => <span>Task</span>,
@@ -18,9 +24,9 @@ export const columns: Array<ColumnDef<Task>> = [
             const label = labels.find((label) => label.value === row.original.label);
 
             return (
-                <div className="flex space-x-2">
+                <div className="flex space-x-2" style={{width: "inherit"}}>
                     {label && <Badge variant="outline">{label.label}</Badge>}
-                    <span className="max-w-[400px] truncate font-medium">
+                    <span className="truncate font-medium">
                         {row.getValue("title")}
                     </span>
                 </div>
